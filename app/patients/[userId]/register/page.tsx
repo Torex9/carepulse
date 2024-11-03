@@ -1,15 +1,20 @@
-import RegisterForm from "@/components/forms/RegisterForm";
-import { getUser } from "@/lib/actions/patient.actions";
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { redirect } from "next/navigation";
+import * as Sentry from "@sentry/nextjs";
+import RegisterForm from "@/components/forms/RegisterForm";
+import { getPatient, getUser } from "@/lib/actions/patient.actions";
 
-const register = async ({ params: { userId } }: SearchParamProps) => {
+const Register = async ({ params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
+  const patient = await getPatient(userId);
+
+  Sentry.metrics.set("user_view_register", user.name);
+
+  if (patient) redirect(`/patients/${userId}/new-appointment`);
 
   return (
     <div className="flex h-screen max-h-screen">
-      <section className="remove-scrollbar container ">
+      <section className="remove-scrollbar container">
         <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
           <Image
             src="/assets/icons/logo-full.svg"
@@ -17,11 +22,11 @@ const register = async ({ params: { userId } }: SearchParamProps) => {
             width={1000}
             alt="patient"
             className="mb-12 h-10 w-fit"
-          ></Image>
+          />
 
           <RegisterForm user={user} />
 
-          <p className="copyright py-12">© 2024 CarePulse</p>
+          <p className="copyright py-12">© 2024 CarePluse</p>
         </div>
       </section>
 
@@ -36,4 +41,4 @@ const register = async ({ params: { userId } }: SearchParamProps) => {
   );
 };
 
-export default register;
+export default Register;
