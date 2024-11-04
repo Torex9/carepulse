@@ -21,6 +21,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { Form } from "../ui/form";
+import emailjs from "@emailjs/browser";
+import { formatDateTime } from "@/lib/utils";
 
 export const AppointmentForm = ({
   userId,
@@ -52,6 +54,27 @@ export const AppointmentForm = ({
       cancellationReason: appointment?.cancellationReason || "",
     },
   });
+
+  const sendEmailNotification = async (content: string) => {
+    //service_3u28z7w
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_SERVICEID || "",
+        process.env.NEXT_PUBLIC_TEMPLATEID || "",
+        {
+          from_name: "CarePulse",
+          from_email: "toludare68@gmail.com",
+          to_name: "CarePulse User",
+          to_email: "toludare68@gmail.com",
+          message: content,
+        },
+        process.env.NEXT_PUBLIC_EMAILAPIKEY
+      );
+    } catch (error) {
+      console.error("An error occurred while sending email:", error);
+    }
+  };
 
   const onSubmit = async (
     values: z.infer<typeof AppointmentFormValidation>
@@ -108,6 +131,9 @@ export const AppointmentForm = ({
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
 
         if (updatedAppointment) {
+          const smsEmailMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(values.schedule!).dateTime} with Dr. ${values.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(values.schedule!).dateTime} is cancelled. Reason:  ${values.cancellationReason}`}.`;
+          await sendEmailNotification(smsEmailMessage);
+
           setOpen && setOpen(false);
           form.reset();
         }
