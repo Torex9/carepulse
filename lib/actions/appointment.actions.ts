@@ -13,6 +13,7 @@ import {
 } from "../appwrite.config";
 import { formatDateTime, parseStringify } from "../utils";
 
+
 //  CREATE APPOINTMENT
 export const createAppointment = async (
   appointment: CreateAppointmentParams,
@@ -101,20 +102,23 @@ export const getRecentAppointmentList = async () => {
 };
 
 //  SEND SMS NOTIFICATION
-export const sendSMSNotification = async (userId: string, content: string) => {
-  try {
-    // https://appwrite.io/docs/references/1.5.x/server-nodejs/messaging#createSms
-    const message = await messaging.createSms(
-      ID.unique(),
-      content,
-      [],
-      [userId],
-    );
-    return parseStringify(message);
-  } catch (error) {
-    console.error("An error occurred while sending sms:", error);
-  }
-};
+// export const sendSMSNotification = async (userId: string, content: string) => {
+//   try {
+//     // https://appwrite.io/docs/references/1.5.x/server-nodejs/messaging#createSms
+//     const message = await messaging.createSms(
+//       ID.unique(),
+//       content,
+//       [],
+//       [userId],
+//     );
+//     return parseStringify(message);
+//   } catch (error) {
+//     console.error("An error occurred while sending sms:", error);
+//   }
+// };
+
+
+
 
 //  UPDATE APPOINTMENT
 export const updateAppointment = async ({
@@ -134,8 +138,8 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw Error;
 
-    // const smsMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
-    // await sendSMSNotification(userId, smsMessage);
+    // const smsEmailMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
+    // await sendEmailNotification(smsEmailMessage);
 
     revalidatePath("/admin");
     return parseStringify(updatedAppointment);
