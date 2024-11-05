@@ -12,10 +12,16 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SelectItem } from "@/components/ui/select";
 import {
+  AlcoholismValues,
+  DiabetesValues,
   Doctors,
   GenderOptions,
+  HandicapValues,
+  HypertensionValues,
   IdentificationTypes,
   PatientFormDefaultValues,
+  ScholarshipValues,
+  SMSRecievedValues,
 } from "@/constants";
 import { registerPatient } from "@/lib/actions/patient.actions";
 import { PatientFormValidation } from "@/lib/validation";
@@ -67,22 +73,21 @@ const RegisterForm = ({ user }: { user: User }) => {
         age: values.age,
         gender: values.gender,
         neighbourhood: values.neighbourhood,
-        occupation: values.occupation,
-        emergencyContactName: values.emergencyContactName,
-        emergencyContactNumber: values.emergencyContactNumber,
+        scholarship: values.scholarship,
+        hypertension: values.hypertension,
+        diabetes: values.diabetes,
+        alcoholism: values.alcoholism,
+        handicap: values.handicap,
+        smsRecieved: values.smsRecieved,
         primaryPhysician: values.primaryPhysician,
-        insuranceProvider: values.insuranceProvider,
-        insurancePolicyNumber: values.insurancePolicyNumber,
-        allergies: values.allergies,
-        currentMedication: values.currentMedication,
-        familyMedicalHistory: values.familyMedicalHistory,
-        pastMedicalHistory: values.pastMedicalHistory,
         identificationType: values.identificationType,
         identificationNumber: values.identificationNumber,
         identificationDocument: values.identificationDocument
           ? formData
           : undefined,
         privacyConsent: values.privacyConsent,
+        treatmentConsent: values.treatmentConsent,
+        disclosureConsent: values.disclosureConsent,
       };
 
       const newPatient = await registerPatient(patient);
@@ -180,7 +185,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             />
           </div>
 
-          {/* Address & Occupation */}
+          {/* Neighbourhood  */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
               fieldType={FormFieldType.INPUT}
@@ -188,33 +193,6 @@ const RegisterForm = ({ user }: { user: User }) => {
               name="neighbourhood"
               label="neighbourhood"
               placeholder="CONQUISTA"
-            />
-
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="occupation"
-              label="Occupation"
-              placeholder=" Software Engineer"
-            />
-          </div>
-
-          {/* Emergency Contact Name & Emergency Contact Number */}
-          <div className="flex flex-col gap-6 xl:flex-row">
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="emergencyContactName"
-              label="Emergency contact name"
-              placeholder="Guardian's name"
-            />
-
-            <CustomFormField
-              fieldType={FormFieldType.PHONE_INPUT}
-              control={form.control}
-              name="emergencyContactNumber"
-              label="Emergency contact number"
-              placeholder="(555) 123-4567"
             />
           </div>
         </section>
@@ -248,61 +226,106 @@ const RegisterForm = ({ user }: { user: User }) => {
             ))}
           </CustomFormField>
 
-          {/* INSURANCE & POLICY NUMBER */}
+          {/* Scholarship & Hypertension */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="insuranceProvider"
-              label="Insurance provider"
-              placeholder="BlueCross BlueShield"
-            />
-
+              name="scholarship"
+              label="Do you have a scholarship?"
+              placeholder="Select an option"
+            >
+              {ScholarshipValues.map((scholar, i) => (
+                <SelectItem key={scholar.value + i} value={scholar.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{scholar.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
             <CustomFormField
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="insurancePolicyNumber"
-              label="Insurance policy number"
-              placeholder="ABC123456789"
-            />
+              name="hypertension"
+              label="Hypertension"
+              placeholder="Select an option"
+            >
+              {HypertensionValues.map((hyper, i) => (
+                <SelectItem key={hyper.value + i} value={hyper.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{hyper.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
           </div>
 
-          {/* ALLERGY & CURRENT MEDICATIONS */}
+          {/* Diabetes & Alcoholism */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="allergies"
-              label="Allergies (if any)"
-              placeholder="Peanuts, Penicillin, Pollen"
-            />
-
+              name="diabetes"
+              label="Do you have a diabetes?"
+              placeholder="Select an option"
+            >
+              {DiabetesValues.map((diab, i) => (
+                <SelectItem key={diab.value + i} value={diab.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{diab.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
             <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="currentMedication"
-              label="Current medications"
-              placeholder="Ibuprofen 200mg, Levothyroxine 50mcg"
-            />
+              name="alcoholism"
+              label="Are you an alcoholic?"
+              placeholder="Select an option"
+            >
+              {AlcoholismValues.map((alcohol, i) => (
+                <SelectItem key={alcohol.value + i} value={alcohol.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{alcohol.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
           </div>
 
-          {/* FAMILY MEDICATION & PAST MEDICATIONS */}
+          {/* Handicap & SMS Recieved */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="familyMedicalHistory"
-              label=" Family medical history (if relevant)"
-              placeholder="Mother had brain cancer, Father has hypertension"
-            />
-
+              name="handicap"
+              label="Are you handicapped?"
+              placeholder="Select an option"
+            >
+              {HandicapValues.map((hand, i) => (
+                <SelectItem key={hand.value + i} value={hand.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{hand.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
             <CustomFormField
-              fieldType={FormFieldType.TEXTAREA}
+              fieldType={FormFieldType.SELECT}
               control={form.control}
-              name="pastMedicalHistory"
-              label="Past medical history"
-              placeholder="Appendectomy in 2015, Asthma diagnosis in childhood"
-            />
+              name="smsRecieved"
+              label="Have you recieved an SMS from Carepulse?"
+              placeholder="Select an option"
+            >
+              {SMSRecievedValues.map((sms, i) => (
+                <SelectItem key={sms.value + i} value={sms.value}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{sms.label}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
           </div>
         </section>
 

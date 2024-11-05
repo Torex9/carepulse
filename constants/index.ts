@@ -1,4 +1,11 @@
 export const GenderOptions = ["M", "F"];
+export const ScholarshipValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+export const HypertensionValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+export const DiabetesValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+export const AlcoholismValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+export const HandicapValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+export const SMSRecievedValues = [{ label: "Yes", value: "1" }, { label: "No", value: '0' }];
+
 
 export const PatientFormDefaultValues = {
   firstName: "",
@@ -8,16 +15,13 @@ export const PatientFormDefaultValues = {
   age: 0,
   gender: "M" as Gender,
   neighbourhood: "",
-  occupation: "",
-  emergencyContactName: "",
-  emergencyContactNumber: "",
+  scholarship: "",
+  hypertension: "",
+  diabetes: "",
+  alcoholism: "",
+  handicap: "",
+  smsRecieved: "",
   primaryPhysician: "",
-  insuranceProvider: "",
-  insurancePolicyNumber: "",
-  allergies: "",
-  currentMedication: "",
-  familyMedicalHistory: "",
-  pastMedicalHistory: "",
   identificationType: "Birth Certificate",
   identificationNumber: "",
   identificationDocument: [],
