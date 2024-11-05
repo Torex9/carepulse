@@ -5,9 +5,9 @@ export interface Patient extends Models.Document {
   name: string;
   email: string;
   phone: string;
-  birthDate: Date;
+  age: number;
   gender: Gender;
-  address: string;
+  neighbourhood: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;

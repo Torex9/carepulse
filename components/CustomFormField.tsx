@@ -25,6 +25,7 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   SELECT = "select",
   SKELETON = "skeleton",
+  NUMBER = "number",
 }
 
 interface CustomProps {
@@ -123,6 +124,28 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               timeInputLabel="Time:"
               dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
               wrapperClassName="date-picker"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.NUMBER:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          <Image
+            src="/assets/icons/calendar.svg"
+            height={24}
+            width={24}
+            alt="user"
+            className="ml-2"
+          />
+          <FormControl>
+            <Input
+              type="number"
+              placeholder={props.placeholder}
+              {...field}
+              value={field.value ?? 0}
+              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              className="shad-input border-0"
             />
           </FormControl>
         </div>

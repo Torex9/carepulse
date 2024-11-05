@@ -590,7 +590,7 @@ declare type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-declare type Gender = "male" | "female" | "other";
+declare type Gender = "M" | "F";
 declare type Status = "pending" | "scheduled" | "cancelled";
 
 declare interface CreateUserParams {
@@ -604,9 +604,9 @@ declare interface User extends CreateUserParams {
 
 declare interface RegisterUserParams extends CreateUserParams {
   userId: string;
-  birthDate: Date;
+  age: number;
   gender: Gender;
-  address: string;
+  neighbourhood: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
@@ -654,9 +654,9 @@ export interface Patient extends Models.Document {
   name: string;
   email: string;
   phone: string;
-  birthDate: Date;
+  age: number;
   gender: Gender;
-  address: string;
+  neighbourhood: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
@@ -798,12 +798,12 @@ export const PatientFormValidation = z.object({
   phone: z
     .string()
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
-  birthDate: z.coerce.date(),
-  gender: z.enum(["Male", "Female", "Other"]),
-  address: z
+  age: z.number().min(1, "Age must be at least 1 character"),
+  gender: z.enum(["M", "F"]),
+  neighbourhood: z
     .string()
-    .min(5, "Address must be at least 5 characters")
-    .max(500, "Address must be at most 500 characters"),
+    .min(5, "neighbourhood must be at least 5 characters")
+    .max(500, "neighbourhood must be at most 500 characters"),
   occupation: z
     .string()
     .min(2, "Occupation must be at least 2 characters")
@@ -902,15 +902,15 @@ export function getAppointmentSchema(type: string) {
 <summary><code>constants/index.ts</code></summary>
 
 ```typescript
-export const GenderOptions = ["male", "female", "other"];
+export const GenderOptions = ["M", "F"];
 
 export const PatientFormDefaultValues = {
   firstName: "",
   lastName: "",
   email: "",
   phone: "",
-  birthDate: new Date(Date.now()),
-  gender: "male" as Gender,
+  age: 0,
+  gender: "M" as Gender,
   address: "",
   occupation: "",
   emergencyContactName: "",
