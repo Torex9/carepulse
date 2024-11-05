@@ -64,9 +64,9 @@ const RegisterForm = ({ user }: { user: User }) => {
         name: values.name,
         email: values.email,
         phone: values.phone,
-        birthDate: new Date(values.birthDate),
+        age: values.age,
         gender: values.gender,
-        address: values.address,
+        neighbourhood: values.neighbourhood,
         occupation: values.occupation,
         emergencyContactName: values.emergencyContactName,
         emergencyContactNumber: values.emergencyContactNumber,
@@ -145,13 +145,13 @@ const RegisterForm = ({ user }: { user: User }) => {
             />
           </div>
 
-          {/* BirthDate & Gender */}
+          {/* Age & Gender */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
-              fieldType={FormFieldType.DATE_PICKER}
+              fieldType={FormFieldType.NUMBER}
               control={form.control}
-              name="birthDate"
-              label="Date of birth"
+              name="age"
+              label="Age"
             />
 
             <CustomFormField
@@ -185,9 +185,9 @@ const RegisterForm = ({ user }: { user: User }) => {
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              name="address"
-              label="Address"
-              placeholder="14 street, New york, NY - 5101"
+              name="neighbourhood"
+              label="neighbourhood"
+              placeholder="CONQUISTA"
             />
 
             <CustomFormField
