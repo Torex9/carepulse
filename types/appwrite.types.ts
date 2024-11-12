@@ -5,16 +5,7 @@ export interface Patient extends Models.Document {
   name: string;
   email: string;
   phone: string;
-  age: number;
-  gender: Gender;
-  neighbourhood: string;
-  scholarship: string;
-  hypertension: string;
-  diabetes: string;
-  alcoholism: string;
-  handicap: string;
-  smsRecieved: string;
-  primaryPhysician: string;
+
   identificationType: string | undefined;
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
@@ -29,6 +20,15 @@ export interface Appointment extends Models.Document {
   schedule: Date;
   status: Status;
   primaryPhysician: string;
+  age: number;
+  gender: Gender;
+  neighbourhood: string;
+  scholarship: string;
+  hypertension: string;
+  diabetes: string;
+  alcoholism: string;
+  handicap: string;
+  smsRecieved: string;
   reason: string;
   note: string;
   userId: string;
