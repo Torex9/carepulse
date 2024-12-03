@@ -20,6 +20,8 @@ import {
 } from "@/constants";
 import {
   createAppointment,
+  createMeeting,
+  getAccessToken,
   updateAppointment,
 } from "@/lib/actions/appointment.actions";
 import { getAppointmentSchema } from "@/lib/validation";
@@ -115,6 +117,12 @@ export const AppointmentForm = ({
 
     console.log("Status before update:", status);
 
+    // Get Zoom Access Token
+    const accessToken = await getAccessToken();
+
+    // Create Zoom Meeting
+    const meetingLink = await createMeeting(accessToken);
+
     try {
       if (type === "create" && patientId) {
         const appointment = {
@@ -160,7 +168,7 @@ export const AppointmentForm = ({
         const updatedAppointment = await updateAppointment(appointmentToUpdate);
 
         if (updatedAppointment) {
-          const smsEmailMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(values.schedule!).dateTime} with Dr. ${values.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(values.schedule!).dateTime} is cancelled. Reason:  ${values.cancellationReason}`}.`;
+          const smsEmailMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(values.schedule!).dateTime} with Dr. ${values.primaryPhysician}. Alternatively, here is a Zoom Meeting link for your appointment  ${meetingLink}` : `We regret to inform that your appointment for ${formatDateTime(values.schedule!).dateTime} is cancelled. Reason:  ${values.cancellationReason}`}.`;
           await sendEmailNotification(smsEmailMessage);
 
           setOpen && setOpen(false);
