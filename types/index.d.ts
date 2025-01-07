@@ -19,16 +19,8 @@ declare interface User extends CreateUserParams {
 
 declare interface RegisterUserParams extends CreateUserParams {
   userId: string;
-  age: number;
-  gender: Gender;
-  neighbourhood: string;
-  scholarship: string;
-  hypertension: string;
-  diabetes: string;
-  alcoholism: string;
-  handicap: string;
-  smsRecieved: string;
-  primaryPhysician: string;
+
+
   identificationType: string | undefined;
   identificationNumber: string | undefined;
   identificationDocument: FormData | undefined;
@@ -41,6 +33,15 @@ declare type CreateAppointmentParams = {
   userId: string;
   patient: string;
   primaryPhysician: string;
+  age: number;
+  gender: Gender;
+  neighbourhood: string;
+  scholarship: string;
+  hypertension: string;
+  diabetes: string;
+  alcoholism: string;
+  handicap: string;
+  smsRecieved: string;
   reason: string;
   schedule: Date;
   status: Status;

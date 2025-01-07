@@ -12,16 +12,8 @@ export const PatientFormDefaultValues = {
   lastName: "",
   email: "",
   phone: "",
-  age: 0,
-  gender: "M" as Gender,
-  neighbourhood: "",
-  scholarship: "",
-  hypertension: "",
-  diabetes: "",
-  alcoholism: "",
-  handicap: "",
-  smsRecieved: "",
-  primaryPhysician: "",
+
+
   identificationType: "Birth Certificate",
   identificationNumber: "",
   identificationDocument: [],

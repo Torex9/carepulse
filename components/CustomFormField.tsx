@@ -62,6 +62,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               placeholder={props.placeholder}
               {...field}
               className="shad-input border-0"
+              disabled={props.disabled}
             />
           </FormControl>
         </div>
@@ -146,6 +147,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
               value={field.value ?? 0}
               onChange={(e) => field.onChange(e.target.valueAsNumber)}
               className="shad-input border-0"
+              disabled={props.disabled}
             />
           </FormControl>
         </div>
@@ -153,7 +155,11 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select
+            onValueChange={field.onChange}
+            defaultValue={field.value}
+            disabled={props.disabled}
+          >
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={props.placeholder} />

@@ -165,3 +165,61 @@ export const getAppointment = async (appointmentId: string) => {
     );
   }
 };
+
+// const getAccessToken = async () => {
+//   const response = await fetch("https://zoom.us/oauth/token", {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Basic ${btoa("CLIENT_ID:CLIENT_SECRET")}`,
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: "grant_type=account_credentials&account_id=ACCOUNT_ID",
+//   });
+
+//   const data = await response.json();
+//   return data.access_token;
+// };
+
+export const getAccessToken = async () => {
+  const response = await fetch("https://zoom.us/oauth/token", {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${Buffer.from(
+        `${process.env.ZOOM_CLIENT_ID}:${process.env.ZOOM_CLIENT_SECRET}`
+      ).toString("base64")}`, // Convert to Base64
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `grant_type=account_credentials&account_id=${process.env.ZOOM_ACCOUNT_ID}`,
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(`Error fetching access token: ${data.error}`);
+  }
+  console.log("Access token:", data.access_token);
+  return data.access_token;
+};
+
+
+export const createMeeting = async (accessToken: string) => {
+  const response = await fetch("https://api.zoom.us/v2/users/me/meetings", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      topic: "CarePulse Appointment",
+      type: 1, // Instant meeting
+      settings: {
+        host_video: true,
+        participant_video: true,
+      },
+    }),
+  });
+
+  const data = await response.json();
+  console.log("Meeting Link:", data.join_url);
+  return data.join_url; // Zoom meeting link
+};
