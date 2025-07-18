@@ -1,5 +1,6 @@
 "use client";
 
+import emailjs from "@emailjs/browser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ import {
   getAccessToken,
   updateAppointment,
 } from "@/lib/actions/appointment.actions";
+import { formatDateTime } from "@/lib/utils";
 import { getAppointmentSchema } from "@/lib/validation";
 import { Appointment } from "@/types/appwrite.types";
 
@@ -32,10 +34,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { Form, FormControl } from "../ui/form";
-import emailjs from "@emailjs/browser";
-import { formatDateTime } from "@/lib/utils";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 export const AppointmentForm = ({
   userId,
@@ -78,7 +78,7 @@ export const AppointmentForm = ({
   });
 
   const sendEmailNotification = async (content: string) => {
-    //service_3u28z7w
+    // service_3u28z7w
 
     try {
       await emailjs.send(

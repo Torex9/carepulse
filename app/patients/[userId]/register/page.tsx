@@ -1,6 +1,7 @@
+import * as Sentry from "@sentry/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import * as Sentry from "@sentry/nextjs";
+
 import RegisterForm from "@/components/forms/RegisterForm";
 import { getPatient, getUser } from "@/lib/actions/patient.actions";
 
